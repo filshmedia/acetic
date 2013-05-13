@@ -63,6 +63,15 @@ describe("acetic middleware", function () {
         done();
       });
   });
+
+  it("should not throw an exception if the source file for the requested file does not exist", function (done) {
+    supertest(app)
+      .get("/assets/css/something-that-doesnt-exist.css")
+      .expect(404)
+      .end(function (err, res) {
+        done();
+      });
+  });
 });
 
 describe("acetic helpers", function () {
