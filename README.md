@@ -1,4 +1,4 @@
-acetic
+acetic [<img src="https://secure.travis-ci.org/filshmedia/acetic.png" />](http://travis-ci.org/#!/filshmedia/acetic)
 ======
 
 `acetic` is a very basic asset compilation engine for express 3.x which supports `CoffeeScript` and `stylus`
