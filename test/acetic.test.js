@@ -84,6 +84,11 @@ describe("acetic helpers", function () {
     _acetic.helper("js")("some-asset.js", "blurb.js").should.equal(expectedHTML);
   });
 
+  it("should ignore external javascript links", function () {
+    var expectedHTML = "<script src=\"http://www.example.com/test.js\"></script>";
+    _acetic.helper("js")("http://www.example.com/test.js").should.equal(expectedHTML);
+  });
+
   /*
    * CSS helper
    */
@@ -100,5 +105,10 @@ describe("acetic helpers", function () {
   it("should correctly build multiple link tags from multiple file names (as multiple arguments)", function () {
     var expectedHTML = "<link rel=\"stylesheet\" href=\"/assets/css/some-asset.css\" /><link rel=\"stylesheet\" href=\"/assets/css/blurb.css\" />";
     _acetic.helper("css")("some-asset.css", "blurb.css").should.equal(expectedHTML);
+  });
+
+  it("should ignore external css links", function () {
+    var expectedHTML = "<link rel=\"stylesheet\" href=\"http://www.example.com/test.css\" />";
+    _acetic.helper("css")("http://www.example.com/test.css").should.equal(expectedHTML);
   });
 });
