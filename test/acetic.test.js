@@ -19,7 +19,7 @@ before(function () {
     cssDirectory: "css",
     cssSourceDirectory: "stylus"
   });
-  app.use(_acetic);
+  app.use(_acetic.init());
 
   app.listen(8899);
 });
@@ -36,7 +36,7 @@ before(function () {
   });
 });
 
-describe("acetic", function () {
+describe("acetic middleware", function () {
   it("should ignore requests to paths apart from the asset path", function (done) {
     supertest(app)
       .get("/something-else/blah.js")
@@ -62,5 +62,43 @@ describe("acetic", function () {
         fs.existsSync(__dirname + "/app/public/assets/css/some-asset.css").should.be.true;
         done();
       });
+  });
+});
+
+describe("acetic helpers", function () {
+  /*
+   * JavaScript helper
+   */
+  it("should correctly build a script tag from a single file name", function () {
+    var expectedHTML = "<script src=\"/assets/js/some-asset.js\"></script>";
+    _acetic.helper("js")("some-asset.js").should.equal(expectedHTML);
+  });
+
+  it("should correctly build multiple script tags from multiple file names (as array)", function () {
+    var expectedHTML = "<script src=\"/assets/js/some-asset.js\"></script><script src=\"/assets/js/blurb.js\"></script>";
+    _acetic.helper("js")(["some-asset.js", "blurb.js"]).should.equal(expectedHTML);
+  });
+
+  it("should correctly build multiple script tags from multiple file names (as multiple arguments)", function () {
+    var expectedHTML = "<script src=\"/assets/js/some-asset.js\"></script><script src=\"/assets/js/blurb.js\"></script>";
+    _acetic.helper("js")("some-asset.js", "blurb.js").should.equal(expectedHTML);
+  });
+
+  /*
+   * CSS helper
+   */
+  it("should correctly build a link tag from a single file name", function () {
+    var expectedHTML = "<link rel=\"stylesheet\" href=\"/assets/css/some-asset.css\" />";
+    _acetic.helper("css")("some-asset.css").should.equal(expectedHTML);
+  });
+
+  it("should correctly build multiple link tags from multiple file names (as array)", function () {
+    var expectedHTML = "<link rel=\"stylesheet\" href=\"/assets/css/some-asset.css\" /><link rel=\"stylesheet\" href=\"/assets/css/blurb.css\" />";
+    _acetic.helper("css")(["some-asset.css", "blurb.css"]).should.equal(expectedHTML);
+  });
+
+  it("should correctly build multiple link tags from multiple file names (as multiple arguments)", function () {
+    var expectedHTML = "<link rel=\"stylesheet\" href=\"/assets/css/some-asset.css\" /><link rel=\"stylesheet\" href=\"/assets/css/blurb.css\" />";
+    _acetic.helper("css")("some-asset.css", "blurb.css").should.equal(expectedHTML);
   });
 });
