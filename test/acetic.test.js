@@ -64,6 +64,16 @@ describe("acetic middleware", function () {
       });
   });
 
+  it("should correctly compile a stylus asset using nib to css", function (done) {
+    supertest(app)
+      .get("/assets/css/nib-test.css")
+      .expect(200)
+      .end(function (err, res) {
+        fs.existsSync(__dirname + "/app/public/assets/css/nib-test.css").should.be.true;
+        done();
+      });
+  });
+
   it("should not throw an exception if the source file for the requested file does not exist", function (done) {
     supertest(app)
       .get("/assets/css/something-that-doesnt-exist.css")

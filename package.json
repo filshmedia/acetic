@@ -1,6 +1,6 @@
 {
   "name": "acetic",
-  "version": "0.0.3-1",
+  "version": "0.0.4",
   "description": "Simple yet powerful asset compilation engine for Express 3.x",
   "main": "lib/acetic.js",
   "scripts": {
@@ -23,13 +23,14 @@
   "author": "Sascha Gehlich <sascha@gehlich.us>",
   "license": "MIT",
   "devDependencies": {
-    "express": "~3.2.4",
     "supertest": "~0.6.0",
-    "coffee-script": "~1.6.2",
-    "stylus": "~0.32.1"
-  },
-  "dependencies": {
     "should": "~1.2.2",
     "mocha": "~1.9.0"
+  },
+  "dependencies": {
+    "express": "~3.2.4",
+    "nib": "~0.9.1",
+    "stylus": "~0.32.1",
+    "coffee-script": "~1.6.2"
   }
 }
