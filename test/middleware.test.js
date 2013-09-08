@@ -103,8 +103,8 @@ describe("acetic helpers", function () {
   });
 
   it("should correctly build multiple script tags if the requested filename is in the `files` configuration array", function () {
-    var expectedHTML = "<script src=\"/assets/js/vendor/jquery.js\"></script><script src=\"/assets/js/vendor/jquery.mobile.js\"></script><script src=\"/assets/js/application.js\"></script>";
-    _acetic.helper.use("javascripts")("application.js").should.equal(expectedHTML)
+    var expectedHTML = "<script src=\"/assets/js/.simple.js\"></script><script src=\"/assets/js/.script.js\"></script>";
+    _acetic.helper.use("javascripts")("precompile.js").should.equal(expectedHTML)
   })
 
   it("should only build a single tag if the requested filename is in the `files` configuration array, but resolveFiles is false", function () {
@@ -138,7 +138,7 @@ describe("acetic helpers", function () {
 
   it("should correctly build multiple link tags if the requested filename is in the `files` configuration array", function () {
     _acetic.options.resolveFiles = true
-    var expectedHTML = "<link rel=\"stylesheet\" href=\"/assets/css/asset.css\" /><link rel=\"stylesheet\" href=\"/assets/css/application.css\" />";
+    var expectedHTML = "<link rel=\"stylesheet\" href=\"/assets/css/reset.css\" /><link rel=\"stylesheet\" href=\"/assets/css/app.css\" />";
     _acetic.helper.use("stylesheets")("application.css").should.equal(expectedHTML)
   })
 

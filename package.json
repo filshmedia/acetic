@@ -37,6 +37,8 @@
     "nib": "~1.0.1",
     "js-yaml": "~2.1.0",
     "underscore": "~1.5.2",
-    "minify": "~0.2.1"
+    "async": "~0.2.9",
+    "browserify": "~2.29.1",
+    "node-minify": "~0.8.1"
   }
 }

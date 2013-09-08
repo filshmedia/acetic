@@ -6,13 +6,13 @@ test:
     source: "../assets/coffeescripts"
     destination: "assets/js"
     minify: true
-    coffeeify: true
+    browserify: true
     files:
-      "application.js":
-        - "vendor/jquery.js"
-        - "vendor/jquery.mobile.js"
-        - "application.js"
-      "sites/index/index.js": true
+      "precompile.js":
+        - ".simple.js"
+        - ".script.js"
+      "minify.js": true
+      "browserified.js": true
   stylesheets:
     compiler: "stylus"
     source: "../assets/stylus"
@@ -20,6 +20,6 @@ test:
     minify: true
     files:
       "application.css":
-        - "asset.css"
-        - "application.css"
+        - "reset.css"
+        - "app.css"
       "sites/index.css": true
