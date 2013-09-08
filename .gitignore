@@ -1,6 +1,7 @@
 node_modules
 test/app/public/assets/**/*.css
 test/app/public/assets/**/*.js
+test/app/public/assets/css/sites
 !.*.js
 !.*.css
 
