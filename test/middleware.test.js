@@ -20,7 +20,8 @@ before(function () {
 before(function () {
   [
     __dirname + "/app/public/assets/js/some-asset.js",
-    __dirname + "/app/public/assets/css/some-asset.css"
+    __dirname + "/app/public/assets/css/some-asset.css",
+    __dirname + "/app/public/assets/css/nib-test.css"
   ].forEach(function (file) {
     if (fs.existsSync(file)) {
       fs.unlinkSync(file);

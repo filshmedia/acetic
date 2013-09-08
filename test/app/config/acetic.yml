@@ -1,5 +1,6 @@
 test:
   public: "../public"
+  debug: true
   javascripts:
     compiler: "coffee"
     source: "../assets/coffeescripts"

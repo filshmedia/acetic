@@ -3,6 +3,9 @@
   "version": "0.0.4-1",
   "description": "Simple yet powerful asset compilation engine for Express 3.x",
   "main": "lib/acetic.js",
+  "bin": {
+    "acetic": "./bin/acetic"
+  },
   "scripts": {
     "test": "make test"
   },
@@ -32,7 +35,7 @@
   },
   "dependencies": {
     "nib": "~0.9.2",
-    "colors": "~0.6.2",
-    "js-yaml": "~2.1.0"
+    "js-yaml": "~2.1.0",
+    "underscore": "~1.5.2"
   }
 }

@@ -1,0 +1,72 @@
+#!/usr/bin/env node
+var acetic = require('../lib/acetic')
+  , fs = require('fs')
+  , usage = [
+      ''
+    , '  Usage: acetic [options] [command]'
+    , ''
+    , '  Commands:'
+    , ''
+    , '    precompile           Precompiles the assets that have'
+    , '                         been defined in the configuration'
+    , '                         file'
+    , ''
+    , '  Options:'
+    , '    -c, --config <file>  Use <file> as the configuration file'
+    , ''
+  ].join('\n')
+  , args = process.argv.slice(2);
+
+function printHelp() {
+  console.error(usage);
+  process.exit(1);
+}
+
+if (args.length === 0)
+  printHelp();
+
+/**
+ * Handle the arguments list
+ */
+var arg
+  , configFile
+  , command;
+while(args.length) {
+  arg = args.shift();
+  switch (arg) {
+    case '-h':
+    case '--help':
+      printHelp();
+      break;
+    case '-c':
+    case '--config':
+      configFile = args.shift();
+      break;
+    default:
+      command = arg;
+      break;
+  }
+}
+
+/**
+ * No command?
+ */
+if (!command) {
+  printHelp();
+}
+
+/**
+ * Handle defaults
+ */
+if (!configFile) {
+  var ymlConfig = process.cwd() + '/app/config/acetic.yml'
+    , jsonConfig = process.cwd() + '/app/config/acetic.json';
+  if (fs.existsSync(ymlConfig)) {
+    configFile = ymlConfig;
+  } else {
+    configFile = jsonConfig;
+  }
+}
+
+var _acetic = new acetic(configFile);
+_acetic.executeCommand(command);
