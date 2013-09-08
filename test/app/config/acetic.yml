@@ -18,4 +18,7 @@ test:
     destination: "assets/css"
     minify: true
     files:
-      "some-asset.css": true
+      "application.css":
+        - "asset.css"
+        - "application.css"
+      "sites/index.css": true
