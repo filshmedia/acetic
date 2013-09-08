@@ -1,5 +1,12 @@
-acetic [<img src="https://secure.travis-ci.org/filshmedia/acetic.png" />](http://travis-ci.org/#!/filshmedia/acetic)
+acetic [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
 ======
+
+[NPMIMGURL]:                https://badge.fury.io/js/acetic.png
+[BuildStatusIMGURL]:        https://secure.travis-ci.org/filshmedia/acetic.png?branch=master
+[DependencyStatusIMGURL]:   https://gemnasium.com/filshmedia/acetic.png
+[NPMURL]:                   //npmjs.org/package/acetic
+[BuildStatusURL]:           //travis-ci.org/filshmedia/acetic  "Build Status"
+[DependencyStatusURL]:      //gemnasium.com/filshmedia/acetic "Dependency Status"
 
 `acetic` is a very basic asset compilation engine for express 3.x which supports `CoffeeScript` and `stylus`
 
