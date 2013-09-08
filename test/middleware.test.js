@@ -5,12 +5,13 @@ var express   = require("express")
 
 // Create an express.js instance and
 // attach an acetic instance
-var app, _acetic;
+var app, _acetic, helper;
 before(function () {
   app = express();
 
   // Use acetic
   _acetic = new acetic(__dirname + "/app/config/acetic.yml");
+  helper = _acetic.helper.use;
   app.use(_acetic.init());
 
   app.listen(8899);
@@ -83,33 +84,33 @@ describe("acetic helpers", function () {
    */
   it("should correctly build a script tag from a single file name", function () {
     var expectedHTML = "<script src=\"/assets/js/some-asset.js\"></script>";
-    _acetic.helper("javascripts")("some-asset.js").should.equal(expectedHTML);
+    _acetic.helper.use("javascripts")("some-asset.js").should.equal(expectedHTML);
   });
 
   it("should correctly build multiple script tags from multiple file names (as array)", function () {
     var expectedHTML = "<script src=\"/assets/js/some-asset.js\"></script><script src=\"/assets/js/blurb.js\"></script>";
-    _acetic.helper("javascripts")(["some-asset.js", "blurb.js"]).should.equal(expectedHTML);
+    _acetic.helper.use("javascripts")(["some-asset.js", "blurb.js"]).should.equal(expectedHTML);
   });
 
   it("should correctly build multiple script tags from multiple file names (as multiple arguments)", function () {
     var expectedHTML = "<script src=\"/assets/js/some-asset.js\"></script><script src=\"/assets/js/blurb.js\"></script>";
-    _acetic.helper("javascripts")("some-asset.js", "blurb.js").should.equal(expectedHTML);
+    _acetic.helper.use("javascripts")("some-asset.js", "blurb.js").should.equal(expectedHTML);
   });
 
   it("should ignore external javascript links", function () {
     var expectedHTML = "<script src=\"http://www.example.com/test.js\"></script>";
-    _acetic.helper("javascripts")("http://www.example.com/test.js").should.equal(expectedHTML);
+    _acetic.helper.use("javascripts")("http://www.example.com/test.js").should.equal(expectedHTML);
   });
 
   it("should correctly build multiple script tags if the requested filename is in the `files` configuration array", function () {
     var expectedHTML = "<script src=\"/assets/js/vendor/jquery.js\"></script><script src=\"/assets/js/vendor/jquery.mobile.js\"></script><script src=\"/assets/js/application.js\"></script>";
-    _acetic.helper("javascripts")("application.js").should.equal(expectedHTML)
+    _acetic.helper.use("javascripts")("application.js").should.equal(expectedHTML)
   })
 
   it("should only build a single tag if the requested filename is in the `files` configuration array, but resolveFiles is false", function () {
     _acetic.options.resolveFiles = false
     var expectedHTML = "<script src=\"/assets/js/application.js\"></script>"
-    _acetic.helper("javascripts")("application.js").should.equal(expectedHTML)
+    _acetic.helper.use("javascripts")("application.js").should.equal(expectedHTML)
   })
 
   /*
@@ -117,33 +118,33 @@ describe("acetic helpers", function () {
    */
   it("should correctly build a link tag from a single file name", function () {
     var expectedHTML = "<link rel=\"stylesheet\" href=\"/assets/css/some-asset.css\" />";
-    _acetic.helper("stylesheets")("some-asset.css").should.equal(expectedHTML);
+    _acetic.helper.use("stylesheets")("some-asset.css").should.equal(expectedHTML);
   });
 
   it("should correctly build multiple link tags from multiple file names (as array)", function () {
     var expectedHTML = "<link rel=\"stylesheet\" href=\"/assets/css/some-asset.css\" /><link rel=\"stylesheet\" href=\"/assets/css/blurb.css\" />";
-    _acetic.helper("stylesheets")(["some-asset.css", "blurb.css"]).should.equal(expectedHTML);
+    _acetic.helper.use("stylesheets")(["some-asset.css", "blurb.css"]).should.equal(expectedHTML);
   });
 
   it("should correctly build multiple link tags from multiple file names (as multiple arguments)", function () {
     var expectedHTML = "<link rel=\"stylesheet\" href=\"/assets/css/some-asset.css\" /><link rel=\"stylesheet\" href=\"/assets/css/blurb.css\" />";
-    _acetic.helper("stylesheets")("some-asset.css", "blurb.css").should.equal(expectedHTML);
+    _acetic.helper.use("stylesheets")("some-asset.css", "blurb.css").should.equal(expectedHTML);
   });
 
   it("should ignore external css links", function () {
     var expectedHTML = "<link rel=\"stylesheet\" href=\"http://www.example.com/test.css\" />";
-    _acetic.helper("stylesheets")("http://www.example.com/test.css").should.equal(expectedHTML);
+    _acetic.helper.use("stylesheets")("http://www.example.com/test.css").should.equal(expectedHTML);
   });
 
   it("should correctly build multiple link tags if the requested filename is in the `files` configuration array", function () {
     _acetic.options.resolveFiles = true
     var expectedHTML = "<link rel=\"stylesheet\" href=\"/assets/css/asset.css\" /><link rel=\"stylesheet\" href=\"/assets/css/application.css\" />";
-    _acetic.helper("stylesheets")("application.css").should.equal(expectedHTML)
+    _acetic.helper.use("stylesheets")("application.css").should.equal(expectedHTML)
   })
 
   it("should only build a single tag if the requested filename is in the `files` configuration array, but resolveFiles is false", function () {
     _acetic.options.resolveFiles = false
     var expectedHTML = "<link rel=\"stylesheet\" href=\"/assets/css/application.css\" />"
-    _acetic.helper("stylesheets")("application.css").should.equal(expectedHTML)
+    _acetic.helper.use("stylesheets")("application.css").should.equal(expectedHTML)
   })
 });
