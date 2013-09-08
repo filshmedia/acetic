@@ -1,0 +1,21 @@
+test:
+  public: "../public"
+  javascripts:
+    compiler: "coffee"
+    source: "../assets/coffeescripts"
+    destination: "assets/js"
+    minify: true
+    coffeeify: true
+    files:
+      "application.js":
+        - "vendor/jquery.js"
+        - "vendor/jquery.mobile.js"
+        - "application.js"
+      "sites/index/index.js": true
+  stylesheets:
+    compiler: "stylus"
+    source: "../assets/stylus"
+    destination: "assets/css"
+    minify: true
+    files:
+      "some-asset.css": true
