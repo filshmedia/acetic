@@ -1,55 +1,41 @@
-var exec = require('child_process').exec
-  , fs = require('fs');
-
-function precompile(callback) {
-  var command = 'cd ' + __dirname + ' && ../bin/acetic precompile'
-    , p = exec(command);
-
-  p.stdout.pipe(process.stdout);
-  p.stderr.pipe(process.stderr);
-
-  p.on('exit', function (errorCode, signal) {
-    errorCode.should.equal(0);
-    callback(null);
-  })
-}
-
-function clearAssets(callback) {
-  ['js', 'css'].forEach(function (assetType) {
-    var path = __dirname + '/app/public/assets/' + assetType
-      , files = fs.readdirSync(path);
-
-    files.forEach(function (file) {
-      if (file.match(/^\./i)) return;
-      if (!fs.statSync(path + '/' + file).isFile()) return;
-
-      fs.unlinkSync(path + '/' + file);
-    })
+describe('Precompiler', function() {
+  describe('if javascript compiler is set to coffee', function () {
+    it('should properly compile coffeescript files to javascript');
+    describe('if minify is enabled', function () {
+      it('should properly minify the compiled javascripts');
+    });
+    describe('if concatenate is enabled', function () {
+      it('should properly concatenate the compiled javascripts');
+    });
   });
 
-  callback();
-}
-
-before(function (done) {
-  clearAssets(function () {
-    precompile(done);
-  });
-});
-
-describe('Precompiler', function () {
-  it('should correctly precompile and minify javascripts', function (done) {
-    var precompilejs = fs.readFileSync( __dirname + '/app/public/assets/js/minify.js')
-      , expectedJavascript = '';
-
-    precompilejs.toString().should.equal(expectedJavascript);
-    done();
+  describe('if javascript compiler is set to coffeeify', function () {
+    it('should properly compile and browserify coffeescript files');
+    describe('if minify is enabled', function () {
+      it('should properly minify the compiled javascripts');
+    });
+    describe('if concatenate is enabled', function () {
+      it('should properly concatenate the compiled javascripts');
+    });
   });
 
-  it('should correctly precompile, concatenate and minify javascripts', function (done) {
-    var precompilejs = fs.readFileSync( __dirname + '/app/public/assets/js/precompile.js')
-      , expectedJavascript = '';
+  describe('if javascript compiler is set to browserify', function () {
+    it('should properly browserify coffeescript files');
+    describe('if minify is enabled', function () {
+      it('should properly minify the compiled javascripts');
+    });
+    describe('if concatenate is enabled', function () {
+      it('should properly concatenate the compiled javascripts');
+    });
+  });
 
-    precompilejs.toString().should.equal(expectedJavascript);
-    done();
+  describe('if stylesheets compiler is set to stylus', function () {
+    it('should properly compile stylus files');
+    describe('if minify is enabled', function () {
+      it('should properly minify the compiled css');
+    });
+    describe('if concatenate is enabled', function () {
+      it('should properly concatenate the compiled css');
+    });
   });
 });

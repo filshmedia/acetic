@@ -1,150 +1,202 @@
-var express   = require("express")
-  , acetic    = require("../lib/acetic")
-  , supertest = require("supertest")
-  , fs        = require("fs");
+var supertest = require('supertest')
+  , fs = require('fs')
+  , utils = require('../lib/utils');
 
-// Create an express.js instance and
-// attach an acetic instance
-var app, _acetic, helper;
-before(function () {
-  app = express();
+var app
+  , testSourceFile = __dirname + '/app/assets/javascripts/middleware.test.coffee'
+  , testDestinationFile = __dirname + '/app/public/assets/javascripts/middleware.test.js'
+  , testDestinationPath = '/assets/javascripts/middleware.test.js'
+  , testSimpleDestinationPath = '/assets/javascripts/middleware.simple.test.js';
 
-  // Use acetic
-  _acetic = new acetic(__dirname + "/app/config/acetic.yml");
-  helper = _acetic.helper.use;
-  app.use(_acetic.init());
-
-  app.listen(8899);
-});
-
-// Clean the compiled files
-before(function () {
-  [
-    __dirname + "/app/public/assets/js/some-asset.js",
-    __dirname + "/app/public/assets/css/some-asset.css",
-    __dirname + "/app/public/assets/css/nib-test.css"
-  ].forEach(function (file) {
-    if (fs.existsSync(file)) {
-      fs.unlinkSync(file);
-    }
-  });
-});
-
-describe("acetic middleware", function () {
-  it("should ignore requests to paths apart from the asset path", function (done) {
-    supertest(app)
-      .get("/something-else/blah.js")
-      .expect(404)
-      .end(done);
-  });
-
-  it("should correctly compile a coffee-script asset to js", function (done) {
-    supertest(app)
-      .get("/assets/js/some-asset.js")
-      .expect(200)
-      .end(function (err, res) {
-        fs.existsSync(__dirname + "/app/public/assets/js/some-asset.js").should.be.true;
-        done();
+describe('Middleware', function() {
+  describe('if checkModifiedDate is enabled', function() {
+    before(function () {
+      app = mockServer({
+        checkModifiedDate: true,
+        public: 'app/public'
       });
-  });
+    });
 
-  it("should correctly compile a stylus asset to css", function (done) {
-    supertest(app)
-      .get("/assets/css/some-asset.css")
-      .expect(200)
-      .end(function (err, res) {
-        fs.existsSync(__dirname + "/app/public/assets/css/some-asset.css").should.be.true;
-        done();
+    after(function () {
+      app.server.close();
+    });
+
+    it('should compile assets if the destination file does not exist', function (done) {
+      if (fs.existsSync(testDestinationFile))
+        fs.unlinkSync(testDestinationFile);
+
+      supertest(app.server)
+        .get(testDestinationPath)
+        .expect(200)
+        .end(done);
+    });
+
+    it('should compile assets if the source file is newer than the destination file', function (done) {
+      var initialModifiedDate = utils.getModifiedDate(testDestinationFile);
+
+      // Let it recompile
+      _after(1000, function () {
+
+        // Re-write the file
+        var content = fs.readFileSync(testSourceFile);
+        fs.writeFileSync(testSourceFile, content);
+
+        supertest(app.server)
+          .get(testDestinationPath)
+          .expect(200)
+          .end(function (err, res) {
+            if (err) throw err;
+
+            // Check whether the destination file has been updated
+            var newModifiedDate = utils.getModifiedDate(testDestinationFile);
+            (newModifiedDate > initialModifiedDate).should.be.true;
+
+            done();
+          });
       });
+    });
+
+    it('should not compile assets if the source file is older than the destination file', function (done) {
+      var initialModifiedDate = utils.getModifiedDate(testDestinationFile);
+
+      supertest(app.server)
+        .get(testDestinationPath)
+        .expect(200)
+        .end(function (err, res) {
+          if (err) throw err;
+
+          // Check whether the destination file has been updated
+          var newModifiedDate = utils.getModifiedDate(testDestinationFile);
+          (+newModifiedDate).should.equal(+initialModifiedDate);
+
+          done();
+        });
+    });
   });
 
-  it("should correctly compile a stylus asset using nib to css", function (done) {
-    supertest(app)
-      .get("/assets/css/nib-test.css")
-      .expect(200)
-      .end(function (err, res) {
-        fs.existsSync(__dirname + "/app/public/assets/css/nib-test.css").should.be.true;
-        done();
+  describe('if checkModifiedDate is disabled', function() {
+    before(function () {
+      app = mockServer({
+        checkModifiedDate: false,
+        public: 'app/public'
       });
-  });
+    });
 
-  it("should not throw an exception if the source file for the requested file does not exist", function (done) {
-    supertest(app)
-      .get("/assets/css/something-that-doesnt-exist.css")
-      .expect(404)
-      .end(function (err, res) {
-        done();
+    after(function () {
+      app.server.close();
+    });
+
+    it('should compile assets if the destination file does not exist', function(done) {
+      if (fs.existsSync(testDestinationFile))
+        fs.unlinkSync(testDestinationFile);
+
+      supertest(app.server)
+        .get(testDestinationPath)
+        .expect(200)
+        .end(done);
+    });
+    it('should compile assets if the source file is newer than the destination file', function (done) {
+      var initialModifiedDate = utils.getModifiedDate(testDestinationFile);
+
+      // Let it recompile
+      _after(1000, function () {
+
+        // Re-write the file
+        var content = fs.readFileSync(testSourceFile);
+        fs.writeFileSync(testSourceFile, content);
+
+        supertest(app.server)
+          .get(testDestinationPath)
+          .expect(200)
+          .end(function (err, res) {
+            if (err) throw err;
+
+            // Check whether the destination file has been updated
+            var newModifiedDate = utils.getModifiedDate(testDestinationFile);
+            (newModifiedDate > initialModifiedDate).should.be.true;
+
+            done();
+          });
       });
-  });
-});
+    });
+    it('should compile assets if the source file is older than the destination file', function (done) {
+      var initialModifiedDate = utils.getModifiedDate(testDestinationFile);
 
-describe("acetic helpers", function () {
-  /*
-   * JavaScript helper
-   */
-  it("should correctly build a script tag from a single file name", function () {
-    var expectedHTML = "<script src=\"/assets/js/some-asset.js\"></script>";
-    _acetic.helper.use("javascripts")("some-asset.js").should.equal(expectedHTML);
-  });
+      // Let it recompile
+      _after(1000, function () {
 
-  it("should correctly build multiple script tags from multiple file names (as array)", function () {
-    var expectedHTML = "<script src=\"/assets/js/some-asset.js\"></script><script src=\"/assets/js/blurb.js\"></script>";
-    _acetic.helper.use("javascripts")(["some-asset.js", "blurb.js"]).should.equal(expectedHTML);
-  });
+        supertest(app.server)
+          .get(testDestinationPath)
+          .expect(200)
+          .end(function (err, res) {
+            if (err) throw err;
 
-  it("should correctly build multiple script tags from multiple file names (as multiple arguments)", function () {
-    var expectedHTML = "<script src=\"/assets/js/some-asset.js\"></script><script src=\"/assets/js/blurb.js\"></script>";
-    _acetic.helper.use("javascripts")("some-asset.js", "blurb.js").should.equal(expectedHTML);
-  });
+            // Check whether the destination file has been updated
+            var newModifiedDate = utils.getModifiedDate(testDestinationFile);
+            (newModifiedDate > initialModifiedDate).should.be.true;
 
-  it("should ignore external javascript links", function () {
-    var expectedHTML = "<script src=\"http://www.example.com/test.js\"></script>";
-    _acetic.helper.use("javascripts")("http://www.example.com/test.js").should.equal(expectedHTML);
+            done();
+          });
+      });
+    });
   });
 
-  it("should correctly build multiple script tags if the requested filename is in the `files` configuration array", function () {
-    var expectedHTML = "<script src=\"/assets/js/.simple.js\"></script><script src=\"/assets/js/.script.js\"></script>";
-    _acetic.helper.use("javascripts")("precompile.js").should.equal(expectedHTML)
-  })
+  describe('if compile is disabled', function() {
+    before(function () {
+      app = mockServer({
+        compile: false,
+        public: 'app/public'
+      });
+    });
 
-  it("should only build a single tag if the requested filename is in the `files` configuration array, but resolveFiles is false", function () {
-    _acetic.options.resolveFiles = false
-    var expectedHTML = "<script src=\"/assets/js/application.js\"></script>"
-    _acetic.helper.use("javascripts")("application.js").should.equal(expectedHTML)
-  })
+    after(function () {
+      app.server.close();
+    });
 
-  /*
-   * CSS helper
-   */
-  it("should correctly build a link tag from a single file name", function () {
-    var expectedHTML = "<link rel=\"stylesheet\" href=\"/assets/css/some-asset.css\" />";
-    _acetic.helper.use("stylesheets")("some-asset.css").should.equal(expectedHTML);
+    it('should not compile assets', function (done) {
+      if (fs.existsSync(testDestinationFile))
+        fs.unlinkSync(testDestinationFile);
+
+      supertest(app.server)
+        .get(testDestinationPath)
+        .expect(404)
+        .end(done);
+    });
   });
 
-  it("should correctly build multiple link tags from multiple file names (as array)", function () {
-    var expectedHTML = "<link rel=\"stylesheet\" href=\"/assets/css/some-asset.css\" /><link rel=\"stylesheet\" href=\"/assets/css/blurb.css\" />";
-    _acetic.helper.use("stylesheets")(["some-asset.css", "blurb.css"]).should.equal(expectedHTML);
+  describe('non-compilable assets', function () {
+    var destinationFile, destinationPath;
+
+    before(function () {
+      app = mockServer({
+        public: 'app/public'
+      });
+    });
+
+    it('should copy and serve a simple javascript file from the coffeescripts folder', function (done) {
+      destinationFile = __dirname + '/app/public/assets/javascripts/middleware.simple.test.js';
+      destinationPath = '/assets/javascripts/middleware.simple.test.js';
+
+      if (fs.existsSync(destinationFile))
+        fs.unlinkSync(destinationFile);
+
+      supertest(app.server)
+        .get(destinationPath)
+        .expect(200, fs.readFileSync(destinationFile))
+        .end(done);
+    });
+
+    it('should copy and serve a simple css file from the stylus folder', function (done) {
+      destinationFile = __dirname + '/app/public/assets/stylesheets/middleware.simple.test.css';
+      destinationPath = '/assets/stylesheets/middleware.simple.test.css';
+
+      if (fs.existsSync(destinationFile))
+        fs.unlinkSync(destinationFile);
+
+      supertest(app.server)
+        .get(destinationPath)
+        .expect(200, fs.readFileSync(destinationFile))
+        .end(done);
+    });
   });
-
-  it("should correctly build multiple link tags from multiple file names (as multiple arguments)", function () {
-    var expectedHTML = "<link rel=\"stylesheet\" href=\"/assets/css/some-asset.css\" /><link rel=\"stylesheet\" href=\"/assets/css/blurb.css\" />";
-    _acetic.helper.use("stylesheets")("some-asset.css", "blurb.css").should.equal(expectedHTML);
-  });
-
-  it("should ignore external css links", function () {
-    var expectedHTML = "<link rel=\"stylesheet\" href=\"http://www.example.com/test.css\" />";
-    _acetic.helper.use("stylesheets")("http://www.example.com/test.css").should.equal(expectedHTML);
-  });
-
-  it("should correctly build multiple link tags if the requested filename is in the `files` configuration array", function () {
-    _acetic.options.resolveFiles = true
-    var expectedHTML = "<link rel=\"stylesheet\" href=\"/assets/css/reset.css\" /><link rel=\"stylesheet\" href=\"/assets/css/app.css\" />";
-    _acetic.helper.use("stylesheets")("application.css").should.equal(expectedHTML)
-  })
-
-  it("should only build a single tag if the requested filename is in the `files` configuration array, but resolveFiles is false", function () {
-    _acetic.options.resolveFiles = false
-    var expectedHTML = "<link rel=\"stylesheet\" href=\"/assets/css/application.css\" />"
-    _acetic.helper.use("stylesheets")("application.css").should.equal(expectedHTML)
-  })
 });

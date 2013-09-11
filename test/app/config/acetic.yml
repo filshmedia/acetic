@@ -3,8 +3,8 @@ test:
   debug: true
   javascripts:
     compiler: "coffee"
-    source: "../assets/coffeescripts"
-    destination: "assets/js"
+    source: "../assets/javascripts"
+    destination: "assets/javascripts"
     minify: true
     browserify: true
     files:
@@ -15,8 +15,8 @@ test:
       "browserified.js": true
   stylesheets:
     compiler: "stylus"
-    source: "../assets/stylus"
-    destination: "assets/css"
+    source: "../assets/stylesheets"
+    destination: "assets/stylesheets"
     minify: true
     files:
       "application.css":
