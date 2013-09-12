@@ -1,41 +1,64 @@
+var fs = require('fs')
+  , options = {
+    javascripts: {},
+    public: 'app/public'
+  };
+
 describe('Precompiler', function() {
-  describe('if javascript compiler is set to coffee', function () {
-    it('should properly compile coffeescript files to javascript');
-    describe('if minify is enabled', function () {
-      it('should properly minify the compiled javascripts');
+  beforeEach(function () {
+    cleanDirectory(__dirname + '/app/public/assets/javascripts', 'js');
+    cleanDirectory(__dirname + '/app/public/assets/stylesheets', 'css');
+  })
+
+  before(function (done) {
+    options.javascripts.files = {
+      'coffee.test.coffee': true
+    };
+    runPrecompiler(options, done);
+  });
+
+  it('should properly compile coffeescript files to javascript', function (done) {
+    expectFileEquality(
+      __dirname + '/app/public/assets/javascripts/coffee.test.js',
+      __dirname + '/fixtures/coffee.test.js'
+    );
+    done();
+  });
+
+  describe('if minify is enabled', function () {
+    before(function (done) {
+      options.javascripts.minify = true;
+      runPrecompiler(options, done);
     });
-    describe('if concatenate is enabled', function () {
-      it('should properly concatenate the compiled javascripts');
+
+    it('should properly minify the compiled javascripts', function (done) {
+      expectFileEquality(
+        __dirname + '/app/public/assets/javascripts/coffee.test.js',
+        __dirname + '/fixtures/coffee.test.minify.js'
+      );
+      done();
     });
   });
 
-  describe('if javascript compiler is set to coffeeify', function () {
-    it('should properly compile and browserify coffeescript files');
-    describe('if minify is enabled', function () {
-      it('should properly minify the compiled javascripts');
+  describe('if concatenate is enabled', function () {
+    before(function (done) {
+      options.javascripts.concatenate = true;
+      options.javascripts.minify = true;
+      options.javascripts.files = {
+        'coffee.test.concatenate.coffee': [
+          'coffee.test.concatenate.1.coffee',
+          'coffee.test.concatenate.2.coffee'
+        ]
+      };
+      runPrecompiler(options, done);
     });
-    describe('if concatenate is enabled', function () {
-      it('should properly concatenate the compiled javascripts');
-    });
-  });
 
-  describe('if javascript compiler is set to browserify', function () {
-    it('should properly browserify coffeescript files');
-    describe('if minify is enabled', function () {
-      it('should properly minify the compiled javascripts');
-    });
-    describe('if concatenate is enabled', function () {
-      it('should properly concatenate the compiled javascripts');
-    });
-  });
-
-  describe('if stylesheets compiler is set to stylus', function () {
-    it('should properly compile stylus files');
-    describe('if minify is enabled', function () {
-      it('should properly minify the compiled css');
-    });
-    describe('if concatenate is enabled', function () {
-      it('should properly concatenate the compiled css');
+    it('should properly concatenate the compiled javascripts', function (done) {
+      expectFileEquality(
+        __dirname + '/app/public/assets/javascripts/coffee.test.concatenate.js',
+        __dirname + '/fixtures/coffee.test.concatenate.js'
+      );
+      done();
     });
   });
 });
