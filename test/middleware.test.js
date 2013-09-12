@@ -163,4 +163,54 @@ describe('Middleware', function() {
         .end(done);
     });
   });
+
+  describe('when compilation fails', function () {
+    before(function () {
+      app = mockServer({
+        public: 'app/public'
+      });
+    });
+
+    after(function () {
+      app.server.close();
+    });
+
+    it('should render coffeescript errors to the destination file', function (done) {
+      testDestinationFile = __dirname + '/app/public/assets/javascripts/coffee/middleware.error.test.js';
+      testDestinationPath = '/assets/javascripts/coffee/middleware.error.test.js';
+      if (fs.existsSync(testDestinationFile))
+        fs.unlinkSync(testDestinationFile);
+
+      supertest(app.server)
+        .get(testDestinationPath)
+        .expect(200)
+        .end(function (err, res) {
+          expectFileEquality(
+            testDestinationFile,
+            __dirname + '/fixtures/coffee/middleware.error.test.js'
+          );
+
+          done();
+        });
+    });
+
+    it('should render stylus errors to the destination file', function (done) {
+      testDestinationFile = __dirname + '/app/public/assets/stylesheets/stylus/stylus.error.test.styl';
+      testDestinationPath = '/assets/stylesheets/stylus/stylus.error.test.styl';
+      if (fs.existsSync(testDestinationFile))
+        fs.unlinkSync(testDestinationFile);
+
+      supertest(app.server)
+        .get(testDestinationPath)
+        .expect(200)
+        .end(function (err, res) {
+          expectFileEquality(
+            testDestinationFile,
+            __dirname + '/fixtures/stylus/stylus.error.test.css'
+          );
+
+          done();
+        });
+    });
+  })
 });
