@@ -76,13 +76,13 @@ directory your configuration file is placed in.
 acetic provides two helpers that automatically generate HTML tags for you so
 that you don't have to mess around with paths:
 
-```jade
+```
 != jsAsset('application.js')
 ```
 
 and
 
-```jade
+```
 != cssAsset('application.css')
 ```
 
