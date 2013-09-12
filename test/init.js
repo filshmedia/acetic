@@ -49,5 +49,8 @@ global.expectFileEquality = function(fileA, fileB) {
   var fileAContent = fs.readFileSync(fileA).toString()
     , fileBContent = fs.readFileSync(fileB).toString();
 
+  fileAContent = fileAContent.replace(/\$\$BASEDIR\$\$/ig, __dirname);
+  fileBContent = fileBContent.replace(/\$\$BASEDIR\$\$/ig, __dirname);
+
   fileAContent.should.equal(fileBContent);
 }
