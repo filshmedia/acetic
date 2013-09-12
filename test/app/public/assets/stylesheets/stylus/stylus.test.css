@@ -1,1 +1,4 @@
-body,html{background:red}
+body,
+html {
+  background: #f00;
+}
