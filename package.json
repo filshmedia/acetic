@@ -40,6 +40,7 @@
     "underscore": "~1.5.2",
     "async": "~0.2.9",
     "browserify": "~2.29.1",
-    "coffeeify": "~0.5.1"
+    "coffeeify": "~0.5.1",
+    "yuicompressor": "~2.4.8"
   }
 }
