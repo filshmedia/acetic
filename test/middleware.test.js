@@ -163,40 +163,4 @@ describe('Middleware', function() {
         .end(done);
     });
   });
-
-  describe('non-compilable assets', function () {
-    var destinationFile, destinationPath;
-
-    before(function () {
-      app = mockServer({
-        public: 'app/public'
-      });
-    });
-
-    it('should copy and serve a simple javascript file from the coffeescripts folder', function (done) {
-      destinationFile = __dirname + '/app/public/assets/javascripts/middleware.simple.test.js';
-      destinationPath = '/assets/javascripts/middleware.simple.test.js';
-
-      if (fs.existsSync(destinationFile))
-        fs.unlinkSync(destinationFile);
-
-      supertest(app.server)
-        .get(destinationPath)
-        .expect(200, fs.readFileSync(destinationFile))
-        .end(done);
-    });
-
-    it('should copy and serve a simple css file from the stylus folder', function (done) {
-      destinationFile = __dirname + '/app/public/assets/stylesheets/middleware.simple.test.css';
-      destinationPath = '/assets/stylesheets/middleware.simple.test.css';
-
-      if (fs.existsSync(destinationFile))
-        fs.unlinkSync(destinationFile);
-
-      supertest(app.server)
-        .get(destinationPath)
-        .expect(200, fs.readFileSync(destinationFile))
-        .end(done);
-    });
-  });
 });
