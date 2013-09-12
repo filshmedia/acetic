@@ -26,61 +26,10 @@ describe('coffeeify compiler', function () {
 
     supertest(app.server)
       .get(testDestinationPath)
-      .expect(expectedContent)
-      .end(done);
-  });
-
-  describe('if minify is enabled', function () {
-    before(function () {
-      app.server.close();
-      app = mockServer({
-        javascripts: { compiler: 'coffeeify', minify: true },
-        public: 'app/public'
+      .expect(200)
+      .end(function (err, res) {
+        (res.text + '\n').should.equal(expectedContent);
+        done();
       });
-    });
-
-    it('should properly minify the compiled javascript', function (done) {
-      if (fs.existsSync(testDestinationFile))
-        fs.unlinkSync(testDestinationFile);
-
-      var expectedContent = fs.readFileSync(__dirname + '/fixtures/coffeeify.test.min.js').toString();
-
-      supertest(app.server)
-        .get(testDestinationPath)
-        .expect(expectedContent)
-        .end(done);
-    });
-  });
-  describe('if concatenate is enabled', function () {
-    before(function () {
-      app.server.close();
-      app = mockServer({
-        javascripts: {
-          compiler: 'coffeeify',
-          files: {
-            'coffeeify.concatenate.js': [
-              'coffeeify.concatenate.1.js',
-              'coffeeify.concatenate.2.js'
-            ]
-          }
-        },
-        public: 'app/public'
-      });
-    });
-
-    it('should properly concatenate the compiled javascripts', function (done) {
-      testDestinationFile = __dirname + '/app/public/assets/javascripts/coffeeify.concatenated.js'
-      testDestinationPath = '/assets/javascripts/coffeeify.concatenated.js';
-
-      if (fs.existsSync(testDestinationFile))
-        fs.unlinkSync(testDestinationFile);
-
-      var expectedContent = fs.readFileSync(__dirname + '/fixtures/coffeeify.test.concatenated.js').toString();
-
-      supertest(app.server)
-        .get(testDestinationPath)
-        .expect(expectedContent)
-        .end(done);
-    });
   });
 });
