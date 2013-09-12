@@ -2,9 +2,9 @@ var fs = require('fs')
   , supertest = require('supertest');
 
 var app
-  , testSourceFile = __dirname + '/app/assets/stylesheets/stylus.test.styl'
-  , testDestinationFile = __dirname + '/app/public/assets/stylesheets/stylus.test.css'
-  , testDestinationPath = '/assets/stylesheets/stylus.test.css';
+  , testSourceFile = __dirname + '/app/assets/stylesheets/stylus/stylus.test.styl'
+  , testDestinationFile = __dirname + '/app/public/assets/stylesheets/stylus/stylus.test.css'
+  , testDestinationPath = '/assets/stylesheets/stylus/stylus.test.css';
 
 describe('stylus compiler', function () {
   before(function () {

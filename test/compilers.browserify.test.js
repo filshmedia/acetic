@@ -2,9 +2,9 @@ var fs = require('fs')
   , supertest = require('supertest');
 
 var app
-  , testSourceFile = __dirname + '/app/assets/javascripts/browserify.test.js'
-  , testDestinationFile = __dirname + '/app/public/assets/javascripts/browserify.test.js'
-  , testDestinationPath = '/assets/javascripts/browserify.test.js';
+  , testSourceFile = __dirname + '/app/assets/javascripts/browserify/browserify.test.js'
+  , testDestinationFile = __dirname + '/app/public/assets/javascripts/browserify/browserify.test.js'
+  , testDestinationPath = '/assets/javascripts/browserify/browserify.test.js';
 
 describe('browserify compiler', function () {
   before(function () {

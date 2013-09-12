@@ -2,9 +2,9 @@ var fs = require('fs')
   , supertest = require('supertest');
 
 var app
-  , testSourceFile = __dirname + '/app/assets/javascripts/coffeeify.test.coffee'
-  , testDestinationFile = __dirname + '/app/public/assets/javascripts/coffeeify.test.js'
-  , testDestinationPath = '/assets/javascripts/coffeeify.test.js';
+  , testSourceFile = __dirname + '/app/assets/javascripts/coffeeify/coffeeify.test.coffee'
+  , testDestinationFile = __dirname + '/app/public/assets/javascripts/coffeeify/coffeeify.test.js'
+  , testDestinationPath = '/assets/javascripts/coffeeify/coffeeify.test.js';
 
 describe('coffeeify compiler', function () {
   before(function () {
