@@ -22,7 +22,7 @@ describe('stylus compiler', function () {
     if (fs.existsSync(testDestinationFile))
       fs.unlinkSync(testDestinationFile);
 
-    var expectedContent = fs.readFileSync(__dirname + '/fixtures/stylus.test.css').toString();
+    var expectedContent = fs.readFileSync(__dirname + '/fixtures/stylus/stylus.test.css').toString();
 
     supertest(app.server)
       .get(testDestinationPath)

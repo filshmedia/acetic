@@ -22,7 +22,7 @@ describe('coffee compiler', function () {
     if (fs.existsSync(testDestinationFile))
       fs.unlinkSync(testDestinationFile);
 
-    var expectedContent = fs.readFileSync(__dirname + '/fixtures/coffee.test.js').toString();
+    var expectedContent = fs.readFileSync(__dirname + '/fixtures/coffee/coffee.test.js').toString();
 
     supertest(app.server)
       .get(testDestinationPath)

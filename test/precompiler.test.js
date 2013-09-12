@@ -20,7 +20,7 @@ describe('Precompiler', function() {
     it('should properly compile coffeescript files to javascript', function (done) {
       expectFileEquality(
         __dirname + '/app/public/assets/javascripts/coffee.test.js',
-        __dirname + '/fixtures/coffee.test.js'
+        __dirname + '/fixtures/coffee/coffee.test.js'
       );
       done();
     });
@@ -28,7 +28,7 @@ describe('Precompiler', function() {
     it('should properly compile stylus files to css', function (done) {
       expectFileEquality(
         __dirname + '/app/public/assets/stylesheets/stylus.test.css',
-        __dirname + '/fixtures/stylus.test.css'
+        __dirname + '/fixtures/stylus/stylus.test.css'
       );
       done();
     });
@@ -50,7 +50,7 @@ describe('Precompiler', function() {
     it('should properly minify the compiled javascripts', function (done) {
       expectFileEquality(
         __dirname + '/app/public/assets/javascripts/coffee.test.js',
-        __dirname + '/fixtures/coffee.test.minify.js'
+        __dirname + '/fixtures/coffee/coffee.test.minify.js'
       );
       done();
     });
@@ -58,7 +58,7 @@ describe('Precompiler', function() {
     it('should properly minify the compiled stylesheets', function (done) {
       expectFileEquality(
         __dirname + '/app/public/assets/stylesheets/stylus.test.css',
-        __dirname + '/fixtures/stylus.test.minify.css'
+        __dirname + '/fixtures/stylus/stylus.test.minify.css'
       );
       done();
     });

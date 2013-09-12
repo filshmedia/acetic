@@ -22,7 +22,7 @@ describe('browserify compiler', function () {
     if (fs.existsSync(testDestinationFile))
       fs.unlinkSync(testDestinationFile);
 
-    var expectedContent = fs.readFileSync(__dirname + '/fixtures/browserify.test.js').toString();
+    var expectedContent = fs.readFileSync(__dirname + '/fixtures/browserify/browserify.test.js').toString();
 
     supertest(app.server)
       .get(testDestinationPath)
