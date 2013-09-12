@@ -39,7 +39,6 @@
     "underscore": "~1.5.2",
     "async": "~0.2.9",
     "browserify": "~2.29.1",
-    "node-minify": "~0.8.1",
     "coffeeify": "~0.5.1"
   }
 }

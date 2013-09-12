@@ -6,20 +6,15 @@ test:
     source: "../assets/javascripts"
     destination: "assets/javascripts"
     minify: true
-    browserify: true
     files:
-      "precompile.js":
-        - ".simple.js"
-        - ".script.js"
-      "minify.js": true
-      "browserified.js": true
+      - "some-file.js"
+      - "some-other-file.js"
   stylesheets:
     compiler: "stylus"
     source: "../assets/stylesheets"
     destination: "assets/stylesheets"
     minify: true
     files:
-      "application.css":
-        - "reset.css"
-        - "app.css"
-      "sites/index.css": true
+      - "reset.css"
+      - "app.css"
+      - "sites/index.css"

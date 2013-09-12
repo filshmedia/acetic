@@ -23,7 +23,14 @@ global.mockServer = function(options) {
 };
 
 global.runPrecompiler = function(options, callback) {
-  var precompiler = new Precompiler(options);
+  // Clean this mess up
+  cleanDirectory(__dirname + '/app/public/assets/javascripts', 'js');
+  cleanDirectory(__dirname + '/app/public/assets/stylesheets', 'css');
+
+  // Create an instance of acetic to apply
+  // the default options
+  var _acetic = new acetic(options);
+  var precompiler = new Precompiler(_acetic.options);
   precompiler.run(callback);
 };
 
