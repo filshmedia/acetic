@@ -3,5 +3,7 @@ test/app/public/assets/**/*.css
 test/app/public/assets/**/*.js
 !.*.js
 !.*.css
+lib-cov
+coverage.html
 
 .DS_Store

@@ -2,7 +2,7 @@
   "name": "acetic",
   "version": "0.0.4-1",
   "description": "Simple yet powerful asset compilation engine for Express 3.x",
-  "main": "lib/acetic.js",
+  "main": "./index.js",
   "bin": {
     "acetic": "./bin/acetic"
   },
@@ -31,7 +31,8 @@
     "mocha": "~1.12.1",
     "express": "~3.2.6",
     "stylus": "~0.32.1",
-    "coffee-script": "~1.6.3"
+    "coffee-script": "~1.6.3",
+    "jscoverage": "~0.3.8"
   },
   "dependencies": {
     "nib": "~1.0.1",
