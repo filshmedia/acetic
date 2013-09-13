@@ -3,18 +3,17 @@ test:
   debug: true
   javascripts:
     compiler: "coffee"
-    source: "../assets/javascripts"
+    source: "../assets/javascripts/precompile"
     destination: "assets/javascripts"
     minify: true
     files:
-      - "some-file.js"
-      - "some-other-file.js"
+      - "some-file.coffee"
+      - "some-other-file.coffee"
   stylesheets:
     compiler: "stylus"
-    source: "../assets/stylesheets"
+    source: "../assets/stylesheets/precompile"
     destination: "assets/stylesheets"
     minify: true
     files:
-      - "reset.css"
-      - "app.css"
-      - "sites/index.css"
+      - "app.styl"
+      - "sites/index.styl"

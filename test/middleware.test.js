@@ -164,7 +164,7 @@ describe('Middleware', function() {
     });
   });
 
-  describe.only('when compilation fails', function () {
+  describe('when compilation fails', function () {
     before(function () {
       app = mockServer({
         public: 'app/public'
