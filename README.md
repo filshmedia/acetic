@@ -1,16 +1,15 @@
 ![acetic logo](http://s1.directupload.net/images/130913/58i7fku2.png)
 
+acetic is an asset (pre-)compilation engine for node.js. It is compatible with `express` 3.x and supports `coffeescript`, `browserify`, `coffeeify`, `stylus` and `nib`
+
 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
 ======
-
 [NPMIMGURL]:                https://badge.fury.io/js/acetic.png
 [BuildStatusIMGURL]:        https://secure.travis-ci.org/filshmedia/acetic.png?branch=master
 [DependencyStatusIMGURL]:   https://gemnasium.com/filshmedia/acetic.png
 [NPMURL]:                   //npmjs.org/package/acetic
 [BuildStatusURL]:           //travis-ci.org/filshmedia/acetic  "Build Status"
 [DependencyStatusURL]:      //gemnasium.com/filshmedia/acetic "Dependency Status"
-
-acetic is an asset (pre-)compilation engine for node.js. It is compatible with `express` 3.x and supports `coffeescript`, `browserify`, `coffeeify`, `stylus` and `nib`
 
 ## Features
 
