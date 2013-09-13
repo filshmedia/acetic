@@ -112,4 +112,39 @@ describe('Precompiler', function() {
       });
     });
   });
+
+  describe('using stylus compiler', function () {
+    describe('if minify is disabled', function () {
+      before(function (done) {
+        options.stylesheets.minify = false;
+        options.stylesheets.files = [
+          'stylus/stylus.test.styl'
+        ];
+        runPrecompiler(options, done);
+      });
+
+      it('should properly compile stylus files to css', function (done) {
+        expectFileEquality(
+          __dirname + '/app/public/assets/stylesheets/stylus/stylus.test.css',
+          __dirname + '/fixtures/stylus/stylus.test.css'
+        );
+        done();
+      });
+    });
+
+    describe('if minify is enabled', function () {
+      before(function (done) {
+        options.stylesheets.minify = true;
+        runPrecompiler(options, done);
+      });
+
+      it('should properly compile and minify stylus files to css', function (done) {
+        expectFileEquality(
+          __dirname + '/app/public/assets/stylesheets/stylus/stylus.test.css',
+          __dirname + '/fixtures/stylus/stylus.test.minify.css'
+        );
+        done();
+      });
+    });
+  });
 });
