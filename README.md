@@ -1,4 +1,6 @@
-acetic [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
+![acetic logo](http://s1.directupload.net/images/130913/58i7fku2.png)
+
+[![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
 ======
 
 [NPMIMGURL]:                https://badge.fury.io/js/acetic.png
@@ -66,7 +68,7 @@ production:
 
 test:
   <<: *defaults
-```
+```http://s1.directupload.net/images/130913/58i7fku2.png
 
 __Please note:__ All paths in your configuration file are relative to the
 directory your configuration file is placed in.
