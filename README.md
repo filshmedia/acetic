@@ -67,7 +67,7 @@ production:
 
 test:
   <<: *defaults
-```http://s1.directupload.net/images/130913/58i7fku2.png
+```
 
 __Please note:__ All paths in your configuration file are relative to the
 directory your configuration file is placed in.
