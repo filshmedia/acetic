@@ -39,7 +39,8 @@ global.cleanDirectory = function(directory, filetype) {
   files.forEach(function (file) {
     var filePath = directory + '/' + file;
     if (!fs.statSync(filePath).isDirectory()
-      && file.split('.').pop().toLowerCase() === filetype) {
+      && file.split('.').pop().toLowerCase() === filetype
+      && file.substr(0, 4) !== 'keep') {
         fs.unlinkSync(filePath);
     }
   });

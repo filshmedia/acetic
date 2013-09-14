@@ -139,6 +139,15 @@ describe('Middleware', function() {
           });
       });
     });
+
+    describe('if the requested file does not have a source counterpart', function () {
+      it('should serve the requested file', function (done) {
+        supertest(app.server)
+          .get('/assets/javascripts/keep.test.js')
+          .expect(200)
+          .end(done);
+      });
+    });
   });
 
   describe('if compile is disabled', function() {
