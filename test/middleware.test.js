@@ -139,14 +139,43 @@ describe('Middleware', function() {
           });
       });
     });
+  });
 
-    describe('if the requested file does not have a source counterpart', function () {
-      it('should serve the requested file', function (done) {
-        supertest(app.server)
-          .get('/assets/javascripts/keep.test.js')
-          .expect(200)
-          .end(done);
-      });
+  describe('if the requested file does not have a source counterpart', function () {
+    it('should serve the requested file', function (done) {
+      supertest(app.server)
+        .get('/assets/javascripts/keep.test.js')
+        .expect(200)
+        .end(done);
+    });
+  });
+
+  describe('if the requested file is not handled by a compiler but is inside a compiler path', function () {
+    // If e.g. a .hbs file is requested inside public/javascripts, the middleware should still
+    // look for the .hbs counterpart inside the source folder of the responsible compiler
+    // and copy it to the requested path.
+    it('should copy the source file to the requested path and serve it', function (done) {
+      var testDestinationFile = __dirname + '/app/public/assets/javascripts/source.test.hbs';
+      if (fs.existsSync(testDestinationFile))
+        fs.unlinkSync(testDestinationFile);
+
+      supertest(app.server)
+        .get('/assets/javascripts/source.test.hbs')
+        .expect(200)
+        .end(done);
+    });
+  });
+
+  describe('if the requested file does have a source counterpart with the same extension', function () {
+    it('should copy the source file to the requested path and serve it', function (done) {
+      var testDestinationFile = __dirname + '/app/public/assets/javascripts/source.test.js';
+      if (fs.existsSync(testDestinationFile))
+        fs.unlinkSync(testDestinationFile);
+
+      supertest(app.server)
+        .get('/assets/javascripts/source.test.js')
+        .expect(200)
+        .end(done);
     });
   });
 
