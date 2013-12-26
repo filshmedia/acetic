@@ -238,8 +238,8 @@ describe('Middleware', function() {
 
     describe('when using stylus as css compiler', function () {
       it('should render stylus errors to the destination file', function (done) {
-        testDestinationFile = __dirname + '/app/public/assets/stylesheets/stylus/stylus.error.test.styl';
-        testDestinationPath = '/assets/stylesheets/stylus/stylus.error.test.styl';
+        testDestinationFile = __dirname + '/app/public/assets/stylesheets/stylus/stylus.error.test.css';
+        testDestinationPath = '/assets/stylesheets/stylus/stylus.error.test.css';
         if (fs.existsSync(testDestinationFile))
           fs.unlinkSync(testDestinationFile);
 
