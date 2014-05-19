@@ -1,6 +1,6 @@
 {
   "name": "acetic",
-  "version": "0.0.7-1",
+  "version": "0.0.7-2",
   "description": "an asset (pre-)compilation engine for node.js and express",
   "main": "./index.js",
   "bin": {
