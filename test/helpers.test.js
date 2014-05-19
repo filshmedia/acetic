@@ -55,6 +55,13 @@ describe('Template helpers', function () {
         var output = app.acetic.helper.use('stylesheets')('http://google.com/test.css');
         output.should.equal('<link rel="stylesheet" href="http://google.com/test.css" />');
       });
+
+      describe('if the second argument is not a string', function () {
+        it('should use it to render additional attributes', function () {
+          var output = app.acetic.helper.use('stylesheets')('reset.css', { 'data-main': 'foobarbaz!' });
+          output.should.equal('<link rel="stylesheet" href="/assets/stylesheets/reset.css" data-main="foobarbaz!" />');
+        });
+      });
     });
   });
 
