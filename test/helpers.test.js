@@ -3,11 +3,13 @@ describe('Template helpers', function () {
   describe('without cdn', function () {
     before(function () {
       app = mockServer({
-        javascripts: {
-          destination: 'assets/javascripts'
-        },
-        stylesheets: {
-          destinaton: 'assets/stylesheets'
+        assets: {
+          javascripts: {
+            destination: 'assets/javascripts'
+          },
+          stylesheets: {
+            destinaton: 'assets/stylesheets'
+          }
         }
       });
     });
@@ -69,11 +71,13 @@ describe('Template helpers', function () {
     before(function () {
       app = mockServer({
         cdn: "http://my.cdn",
-        javascripts: {
-          destination: 'assets/javascripts'
-        },
-        stylesheets: {
-          destinaton: 'assets/stylesheets'
+        assets: {
+          javascripts: {
+            destination: 'assets/javascripts'
+          },
+          stylesheets: {
+            destinaton: 'assets/stylesheets'
+          }
         }
       });
     });

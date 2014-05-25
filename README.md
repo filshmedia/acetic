@@ -49,14 +49,15 @@ behaves in the different environments. Here's an example:
 defaults: &defaults
   public: "./public"
   debug: true
-  javascripts:
-    compiler: "coffee"
-    source: "./assets/javascripts"
-    destination: "./public/assets/javascripts"
-  stylesheets:
-    compiler: "stylus"
-    source: "./assets/stylesheets"
-    destination: "./public/assets/stylesheets"
+  assets:
+    javascripts:
+      compiler: "coffee"
+      source: "./assets/javascripts"
+      destination: "./public/assets/javascripts"
+    stylesheets:
+      compiler: "stylus"
+      source: "./assets/stylesheets"
+      destination: "./public/assets/stylesheets"
 
 development:
   <<: *defaults
@@ -115,22 +116,23 @@ tell it by specifying a `files` array in the configuration, like so:
 ```yaml
 production:
   public: "./public"
-  javascripts:
-    compiler: "coffee"
-    minify: true
-    source: "./assets/javascripts"
-    destination: "./public/assets/javascripts"
-    files:
-      - "application.coffee"
-      - "users/form.coffee"
-  stylesheets:
-    compiler: "stylus"
-    minify: true
-    source: "./assets/stylesheets"
-    destination: "./public/assets/stylesheets"
-    files:
-      - "reset.styl"
-      - "application.styl"
+  assets:
+    javascripts:
+      compiler: "coffee"
+      minify: true
+      source: "./assets/javascripts"
+      destination: "./public/assets/javascripts"
+      files:
+        - "application.coffee"
+        - "users/form.coffee"
+    stylesheets:
+      compiler: "stylus"
+      minify: true
+      source: "./assets/stylesheets"
+      destination: "./public/assets/stylesheets"
+      files:
+        - "reset.styl"
+        - "application.styl"
 ```
 
 After running `acetic precompile` in the production environment, acetic will

@@ -238,8 +238,10 @@ describe('Middleware', function() {
       before(function () {
         app.server.close();
         app = mockServer({
-          javascripts: {
-            compiler: 'coffeeify'
+          assets: {
+            javascripts: {
+              compiler: 'coffeeify'
+            },
           },
           public: 'app/public'
         });

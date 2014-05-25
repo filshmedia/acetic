@@ -9,7 +9,9 @@ var app
 describe('coffee compiler', function () {
   before(function () {
     app = mockServer({
-      javascripts: { compiler: 'coffee' },
+      assets: {
+        javascripts: { compiler: 'coffee' }
+      },
       public: 'app/public'
     });
   });

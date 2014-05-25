@@ -9,7 +9,9 @@ var app
 describe('browserify compiler', function () {
   before(function () {
     app = mockServer({
-      javascripts: { compiler: 'browserify' },
+      assets: {
+        javascripts: { compiler: 'browserify' }
+      },
       public: 'app/public'
     });
   });

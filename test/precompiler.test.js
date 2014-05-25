@@ -1,7 +1,9 @@
 var fs = require('fs')
   , options = {
-    javascripts: {},
-    stylesheets: {},
+    assets: {
+      javascripts: {},
+      stylesheets: {},
+    },
     public: 'app/public'
   };
 
@@ -9,8 +11,8 @@ describe('Precompiler', function() {
   describe('using coffee compiler', function () {
     describe('if minify is disabled', function () {
       before(function (done) {
-        options.javascripts.minify = false;
-        options.javascripts.files = [
+        options.assets.javascripts.minify = false;
+        options.assets.javascripts.files = [
           'coffee/coffee.test.coffee'
         ];
         runPrecompiler(options, done);
@@ -27,7 +29,7 @@ describe('Precompiler', function() {
 
     describe('if minify is enabled', function () {
       before(function (done) {
-        options.javascripts.minify = true;
+        options.assets.javascripts.minify = true;
         runPrecompiler(options, done);
       });
 
@@ -44,9 +46,9 @@ describe('Precompiler', function() {
   describe('using browserify compiler', function () {
     describe('if minify is disabled', function () {
       before(function (done) {
-        options.javascripts.compiler = 'browserify';
-        options.javascripts.minify = false;
-        options.javascripts.files = [
+        options.assets.javascripts.compiler = 'browserify';
+        options.assets.javascripts.minify = false;
+        options.assets.javascripts.files = [
           'browserify/browserify.test.js'
         ];
         runPrecompiler(options, done);
@@ -63,7 +65,7 @@ describe('Precompiler', function() {
 
     describe('if minify is enabled', function () {
       before(function (done) {
-        options.javascripts.minify = true;
+        options.assets.javascripts.minify = true;
         runPrecompiler(options, done);
       });
 
@@ -80,9 +82,9 @@ describe('Precompiler', function() {
   describe('using coffeeify compiler', function () {
     describe('if minify is disabled', function () {
       before(function (done) {
-        options.javascripts.compiler = 'coffeeify';
-        options.javascripts.minify = false;
-        options.javascripts.files = [
+        options.assets.javascripts.compiler = 'coffeeify';
+        options.assets.javascripts.minify = false;
+        options.assets.javascripts.files = [
           'coffeeify/coffeeify.test.coffee'
         ];
         runPrecompiler(options, done);
@@ -99,7 +101,7 @@ describe('Precompiler', function() {
 
     describe('if minify is enabled', function () {
       before(function (done) {
-        options.javascripts.minify = true;
+        options.assets.javascripts.minify = true;
         runPrecompiler(options, done);
       });
 
@@ -116,8 +118,8 @@ describe('Precompiler', function() {
   describe('using stylus compiler', function () {
     describe('if minify is disabled', function () {
       before(function (done) {
-        options.stylesheets.minify = false;
-        options.stylesheets.files = [
+        options.assets.stylesheets.minify = false;
+        options.assets.stylesheets.files = [
           'stylus/stylus.test.styl'
         ];
         runPrecompiler(options, done);
@@ -134,7 +136,7 @@ describe('Precompiler', function() {
 
     describe('if minify is enabled', function () {
       before(function (done) {
-        options.stylesheets.minify = true;
+        options.assets.stylesheets.minify = true;
         runPrecompiler(options, done);
       });
 

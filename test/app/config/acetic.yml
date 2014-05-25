@@ -1,19 +1,20 @@
 test:
   public: "../public"
   debug: true
-  javascripts:
-    compiler: "coffee"
-    source: "../assets/javascripts/precompile"
-    destination: "assets/javascripts"
-    minify: true
-    files:
-      - "some-file.coffee"
-      - "some-other-file.coffee"
-  stylesheets:
-    compiler: "stylus"
-    source: "../assets/stylesheets/precompile"
-    destination: "assets/stylesheets"
-    minify: true
-    files:
-      - "app.styl"
-      - "sites/index.styl"
+  assets:
+    javascripts:
+      compiler: "coffee"
+      source: "../assets/javascripts/precompile"
+      destination: "assets/javascripts"
+      minify: true
+      files:
+        - "some-file.coffee"
+        - "some-other-file.coffee"
+    stylesheets:
+      compiler: "stylus"
+      source: "../assets/stylesheets/precompile"
+      destination: "assets/stylesheets"
+      minify: true
+      files:
+        - "app.styl"
+        - "sites/index.styl"
